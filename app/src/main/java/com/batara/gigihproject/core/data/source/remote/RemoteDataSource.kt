@@ -1,0 +1,32 @@
+package com.batara.gigihproject.core.data.source.remote
+
+import android.util.Log
+import com.batara.gigihproject.core.data.source.remote.network.ApiInterface
+import com.batara.gigihproject.core.data.source.remote.network.ApiResponse
+import com.batara.gigihproject.core.data.source.remote.response.GeometriesItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+
+class RemoteDataSource constructor(private val apiInterface: ApiInterface) {
+
+    suspend fun getAllDisaster() : Flow<ApiResponse<List<GeometriesItem>>>{
+        return flow {
+            try {
+                val response = apiInterface.getDisaster(null,null, 604800)
+                val dataArray = response.result.objects.output.geometries
+                if (dataArray.isNotEmpty()){
+                    emit(ApiResponse.Success(dataArray))
+                }
+            }catch (e : Exception){
+                emit(ApiResponse.Error(e.toString()))
+                Log.e(TAG, "getAllDisaster: $e")
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    companion object{
+        private const val TAG = "RemoteDataSource"
+    }
+}
