@@ -40,6 +40,50 @@ class DisasterRepository constructor(
             }
         }.asFlow()
 
+    override fun getFilterDisaster(filter : String): Flow<Resource<List<Disaster>>> =
+        object : NetworkBoundResource<List<Disaster>, List<GeometriesItem>>(){
+            override fun loadFromDB(): Flow<List<Disaster>> {
+                return localDataSource.getAllDisaster().map {
+                    DataMapper.mapEntitiesToDomain(it)
+                }
+            }
+
+            override fun shouldFetch(data: List<Disaster>?): Boolean =
+//                data == null || data.isEmpty()
+                true
+
+            override suspend fun createCall(): Flow<ApiResponse<List<GeometriesItem>>> =
+                remoteDataSource.getFilterDisaster(filter)
+
+            override suspend fun saveCallResult(data: List<GeometriesItem>) {
+                val disasterList = DataMapper.mapResponsesToEntities(data)
+                localDataSource.deleteDisaster()
+                localDataSource.insertDisaster(disasterList)
+            }
+        }.asFlow()
+
+    override fun getFilterLocationDisaster(filter : String): Flow<Resource<List<Disaster>>> =
+        object : NetworkBoundResource<List<Disaster>, List<GeometriesItem>>(){
+            override fun loadFromDB(): Flow<List<Disaster>> {
+                return localDataSource.getAllDisaster().map {
+                    DataMapper.mapEntitiesToDomain(it)
+                }
+            }
+
+            override fun shouldFetch(data: List<Disaster>?): Boolean =
+//                data == null || data.isEmpty()
+                true
+
+            override suspend fun createCall(): Flow<ApiResponse<List<GeometriesItem>>> =
+                remoteDataSource.getFilterDisasterLocation(filter)
+
+            override suspend fun saveCallResult(data: List<GeometriesItem>) {
+                val disasterList = DataMapper.mapResponsesToEntities(data)
+                localDataSource.deleteDisaster()
+                localDataSource.insertDisaster(disasterList)
+            }
+        }.asFlow()
+
     companion object{
         @Volatile
         private var instance : DisasterRepository? = null

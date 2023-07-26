@@ -4,4 +4,50 @@
     <string name="errorText">Oops.. something went wrong</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    
+    <string-array name="filter_disaster">
+        <item>Volcano</item>
+        <item>Flood</item>
+        <item>Earthquake</item>
+        <item>Haze</item>
+        <item>Fire</item>
+        <item>Wind</item>
+    </string-array>
+
+    <string-array name="data_filter_disaster">
+        <item>volcano</item>
+        <item>flood</item>
+        <item>earthquake</item>
+        <item>haze</item>
+        <item>fire</item>
+        <item>wind</item>
+    </string-array>
+
+    <string-array name="filter_location">
+        <item>Aceh</item>
+        <item>Bali</item>
+        <item>Bangka Belitung</item>
+        <item>Banten</item>
+        <item>Bengukulu</item>
+        <item>Jawa Tengah</item>
+        <item>Kalimantan Tengah</item>
+        <item>Sulawesi Tengah</item>
+        <item>Jawa Timur</item>
+        <item>Kalimantan Timur</item>
+        <item>DKI Jakarta</item>
+    </string-array>
+
+    <string-array name="data_filter_location">
+        <item>ID-AC</item>
+        <item>ID-BA</item>
+        <item>ID-BB</item>
+        <item>ID-BT</item>
+        <item>ID-BE</item>
+        <item>ID-JT</item>
+        <item>ID-KT</item>
+        <item>ID-ST</item>
+        <item>JI</item>
+        <item>ID-KI</item>
+        <item>ID-JK</item>
+    </string-array>
 </resources>

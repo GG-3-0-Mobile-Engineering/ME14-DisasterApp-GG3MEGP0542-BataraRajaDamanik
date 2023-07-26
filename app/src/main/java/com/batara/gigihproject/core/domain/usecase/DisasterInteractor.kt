@@ -7,4 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 class DisasterInteractor(private val disasterIDisasterRepository: IDisasterRepository) : DisasterUseCase {
     override fun getAllDisaster() = disasterIDisasterRepository.getAllDisaster()
+    override fun getFilterDisaster(filter: String): Flow<Resource<List<Disaster>>> = disasterIDisasterRepository.getFilterDisaster(filter)
+    override fun getFilterLocationDisaster(filter: String): Flow<Resource<List<Disaster>>> = disasterIDisasterRepository.getFilterLocationDisaster(filter)
 }

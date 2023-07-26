@@ -11,5 +11,5 @@ val useCaseModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { MapViewModel(get()) }
+    viewModel { (disasterUseCase : DisasterUseCase) -> MapViewModel(disasterUseCase) }
 }

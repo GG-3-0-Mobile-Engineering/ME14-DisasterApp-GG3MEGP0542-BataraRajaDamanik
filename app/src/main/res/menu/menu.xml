@@ -7,5 +7,17 @@
             android:icon="@drawable/setting_icon"
             android:title="menu 1"
             app:showAsAction="always" />
+
+        <item
+            android:id="@+id/menu2"
+            android:icon="@drawable/setting_icon"
+            android:title="menu 1"
+            app:showAsAction="always" />
+
+        <item
+            android:id="@+id/menu3"
+            android:icon="@drawable/setting_icon"
+            android:title="menu 1"
+            app:showAsAction="always" />
     </group>
 </menu>

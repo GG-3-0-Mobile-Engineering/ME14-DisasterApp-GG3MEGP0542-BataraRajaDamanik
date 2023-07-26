@@ -18,6 +18,42 @@ class RemoteDataSource constructor(private val apiInterface: ApiInterface) {
                 val dataArray = response.result.objects.output.geometries
                 if (dataArray.isNotEmpty()){
                     emit(ApiResponse.Success(dataArray))
+                } else {
+                    emit(ApiResponse.Error("Data Kosong"))
+                }
+            }catch (e : Exception){
+                emit(ApiResponse.Error(e.toString()))
+                Log.e(TAG, "getAllDisaster: $e")
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getFilterDisaster(filter : String) : Flow<ApiResponse<List<GeometriesItem>>>{
+        return flow {
+            try {
+                val response = apiInterface.getDisaster(null,filter, 604800)
+                val dataArray = response.result.objects.output.geometries
+                if (dataArray.isNotEmpty()){
+                    emit(ApiResponse.Success(dataArray))
+                } else {
+                    emit(ApiResponse.Error("Data Kosong"))
+                }
+            }catch (e : Exception){
+                emit(ApiResponse.Error(e.toString()))
+                Log.e(TAG, "getAllDisaster: $e")
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getFilterDisasterLocation(filter : String) : Flow<ApiResponse<List<GeometriesItem>>>{
+        return flow {
+            try {
+                val response = apiInterface.getDisaster(filter,null, 604800)
+                val dataArray = response.result.objects.output.geometries
+                if (dataArray.isNotEmpty()){
+                    emit(ApiResponse.Success(dataArray))
+                } else {
+                    emit(ApiResponse.Error("Data Kosong"))
                 }
             }catch (e : Exception){
                 emit(ApiResponse.Error(e.toString()))
