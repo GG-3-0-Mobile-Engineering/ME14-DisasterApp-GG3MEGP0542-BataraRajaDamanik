@@ -62,6 +62,23 @@ class RemoteDataSource constructor(private val apiInterface: ApiInterface) {
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun getFilterDisasterLocation(startDate : String, endDate: String) : Flow<ApiResponse<List<GeometriesItem>>>{
+        return flow {
+            try {
+                val response = apiInterface.getDateDisaster(startDate,endDate)
+                val dataArray = response.result.objects.output.geometries
+                if (dataArray.isNotEmpty()){
+                    emit(ApiResponse.Success(dataArray))
+                } else {
+                    emit(ApiResponse.Error("Data Kosong"))
+                }
+            }catch (e : Exception){
+                emit(ApiResponse.Error(e.toString()))
+                Log.e(TAG, "getAllDisaster: $e")
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
     companion object{
         private const val TAG = "RemoteDataSource"
     }

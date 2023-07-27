@@ -1,60 +1,123 @@
 package com.batara.gigihproject.setting
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.fragment.app.Fragment
 import com.batara.gigihproject.R
+import com.batara.gigihproject.SettingPreferences
+import com.batara.gigihproject.databinding.FragmentSettingBinding
+import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SettingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding : FragmentSettingBinding? = null
+    private val binding get() = _binding!!
+    private val settingViewModel: SettingViewModel by viewModel { parametersOf(get<SettingPreferences>()) }
+
+    private val notificationId = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+    ): View {
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        return  binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SettingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        settingViewModel.getThemeSettings().observe(viewLifecycleOwner) { isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
+                binding.switchTheme.isChecked = true
+            } else {
+                binding.switchTheme.isChecked = false
+            }
+        }
+
+        with(binding){
+            switchTheme.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+                settingViewModel.saveThemeSetting(isChecked)
+            }
+
+            btnNotification.setOnClickListener{
+                showNotification()
+            }
+        }
+    }
+
+    private fun showNotification() {
+        val channelId = "channelId"
+
+        val notificationBuilder = NotificationCompat.Builder(requireContext(), channelId)
+            .setSmallIcon(R.drawable.ic_launcher_background) // Replace with your notification icon
+            .setContentTitle("Waspada Ketinggian Air")
+            .setContentText("Status : SIAGA 4")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true) // Removes the notification when tapped
+
+
+        val permission = Manifest.permission.POST_NOTIFICATIONS
+        val notificationManager = NotificationManagerCompat.from(requireContext())
+        if (activity?.applicationContext?.let {
+                ActivityCompat.checkSelfPermission(
+                    it,
+                    permission
+                )
+            } != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission not granted, request it
+            requestNotificationPermission()
+        } else {
+            notificationManager.notify(notificationId, notificationBuilder.build())
+        }
+    }
+
+    private fun requestNotificationPermission() {
+        val permission = Manifest.permission.POST_NOTIFICATIONS
+
+        activity?.let {
+            ActivityCompat.requestPermissions(
+                it,
+                arrayOf(permission),
+                notificationId
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            notificationId -> {
+                // Check if the permission is granted
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted, proceed with showing the notification
+                    showNotification()
+                } else {
+                    // Permission denied, handle the case where the user denies the permission
+                    // You can show a message to the user or disable functionality that requires this permission.
                 }
             }
+        }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 }

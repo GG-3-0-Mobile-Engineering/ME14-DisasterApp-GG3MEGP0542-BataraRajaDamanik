@@ -9,4 +9,6 @@ class DisasterInteractor(private val disasterIDisasterRepository: IDisasterRepos
     override fun getAllDisaster() = disasterIDisasterRepository.getAllDisaster()
     override fun getFilterDisaster(filter: String): Flow<Resource<List<Disaster>>> = disasterIDisasterRepository.getFilterDisaster(filter)
     override fun getFilterLocationDisaster(filter: String): Flow<Resource<List<Disaster>>> = disasterIDisasterRepository.getFilterLocationDisaster(filter)
+    override fun getFilterDateDisaster(startDate: String, endDate: String): Flow<Resource<List<Disaster>>> =
+        disasterIDisasterRepository.getFilterDateDisaster(startDate, endDate)
 }

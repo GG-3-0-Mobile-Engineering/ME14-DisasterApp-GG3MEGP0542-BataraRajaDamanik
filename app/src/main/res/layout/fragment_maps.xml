@@ -42,10 +42,12 @@
             android:layout_gravity="top|center">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search"
+                android:background="#d3d3d3"
+                style="@style/Text2.title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="Cari Kota"/>
+                android:hint="@string/cari_kota"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -69,6 +71,15 @@
             android:layout_marginTop="126dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/date_range"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"/>
 
         <FrameLayout
             android:id="@+id/bottomSheet"

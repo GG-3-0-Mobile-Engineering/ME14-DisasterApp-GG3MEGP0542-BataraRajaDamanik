@@ -37,7 +37,8 @@ class DisasterAdapter : RecyclerView.Adapter<DisasterAdapter.ListViewHolder>() {
                 Glide.with(itemView.context)
                     .load(data.properties.imageUrl)
                     .into(ivDisaster)
-                tvTitle.text = data.properties.title
+                tvText.text = data.properties.text
+                tvDisasterType.text = data.properties.disasterType
             }
         }
     }
