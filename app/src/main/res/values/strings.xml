@@ -7,6 +7,7 @@
     <string name="change_theme">Change Theme</string>
     <string name="send_notification">Send Notification</string>
     <string name="cari_kota">Cari Kota</string>
+    <string name="menu_setting">Menu Setting</string>
 
     <string-array name="filter_disaster">
         <item>Volcano</item>

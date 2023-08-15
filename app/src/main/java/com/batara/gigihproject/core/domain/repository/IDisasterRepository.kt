@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface IDisasterRepository {
     fun getAllDisaster() : Flow<Resource<List<Disaster>>>
     fun getFilterDisaster(filter : String) : Flow<Resource<List<Disaster>>>
-
     fun getFilterLocationDisaster(filter : String) : Flow<Resource<List<Disaster>>>
-
     fun getFilterDateDisaster(startDate : String, endDate: String) : Flow<Resource<List<Disaster>>>
 }
