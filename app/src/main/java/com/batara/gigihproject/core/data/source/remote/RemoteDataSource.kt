@@ -8,8 +8,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RemoteDataSource constructor(private val apiInterface: ApiInterface) {
+@Singleton
+class RemoteDataSource @Inject constructor(private val apiInterface: ApiInterface) {
 
     suspend fun getAllDisaster() : Flow<ApiResponse<List<GeometriesItem>>>{
         return flow {
@@ -23,7 +26,6 @@ class RemoteDataSource constructor(private val apiInterface: ApiInterface) {
                 }
             }catch (e : Exception){
                 emit(ApiResponse.Error(e.toString()))
-                Log.e(TAG, "getAllDisaster: $e")
             }
         }.flowOn(Dispatchers.IO)
     }

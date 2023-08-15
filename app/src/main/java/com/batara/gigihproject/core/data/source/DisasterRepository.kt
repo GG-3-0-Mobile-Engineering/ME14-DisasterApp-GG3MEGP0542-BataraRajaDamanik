@@ -1,21 +1,21 @@
 package com.batara.gigihproject.core.data.source
 
-import android.util.Log
 import com.batara.gigihproject.core.data.source.local.LocalDataSource
 import com.batara.gigihproject.core.data.source.remote.RemoteDataSource
 import com.batara.gigihproject.core.data.source.remote.network.ApiResponse
 import com.batara.gigihproject.core.data.source.remote.response.GeometriesItem
 import com.batara.gigihproject.core.domain.model.Disaster
 import com.batara.gigihproject.core.domain.repository.IDisasterRepository
-import com.batara.gigihproject.core.utils.AppExecutors
 import com.batara.gigihproject.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DisasterRepository constructor(
+@Singleton
+class DisasterRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
-    private val appExecutors: AppExecutors,
 ) : IDisasterRepository{
 
     override fun getAllDisaster(): Flow<Resource<List<Disaster>>> =

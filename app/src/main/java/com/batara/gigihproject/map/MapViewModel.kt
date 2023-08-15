@@ -6,14 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import com.batara.gigihproject.core.domain.usecase.DisasterUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MapViewModel(disasterUseCase: DisasterUseCase) : ViewModel() {
+@HiltViewModel
+class MapViewModel @Inject constructor(disasterUseCase: DisasterUseCase) : ViewModel() {
     private val _disasterFilter = MutableLiveData<String>()
     private val _disasterFilterLocation = MutableLiveData<String>()
     private val _disasterFilterDate = MutableLiveData<List<String>>()
-    val disasterFilter: LiveData<String> get() = _disasterFilter
-    val disasterFilterLocation: LiveData<String> get() = _disasterFilterLocation
-    val disasterFilterDate: LiveData<List<String>> get() = _disasterFilterDate
+    private val disasterFilter: LiveData<String> get() = _disasterFilter
+    private val disasterFilterLocation: LiveData<String> get() = _disasterFilterLocation
+    private val disasterFilterDate: LiveData<List<String>> get() = _disasterFilterDate
 
     val disaster = disasterUseCase.getAllDisaster().asLiveData()
 

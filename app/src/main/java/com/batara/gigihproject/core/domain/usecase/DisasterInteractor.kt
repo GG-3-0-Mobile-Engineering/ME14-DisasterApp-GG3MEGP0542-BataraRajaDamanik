@@ -4,8 +4,9 @@ import com.batara.gigihproject.core.data.source.Resource
 import com.batara.gigihproject.core.domain.model.Disaster
 import com.batara.gigihproject.core.domain.repository.IDisasterRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class DisasterInteractor(private val disasterIDisasterRepository: IDisasterRepository) : DisasterUseCase {
+class DisasterInteractor @Inject constructor(private val disasterIDisasterRepository: IDisasterRepository) : DisasterUseCase {
     override fun getAllDisaster() = disasterIDisasterRepository.getAllDisaster()
     override fun getFilterDisaster(filter: String): Flow<Resource<List<Disaster>>> = disasterIDisasterRepository.getFilterDisaster(filter)
     override fun getFilterLocationDisaster(filter: String): Flow<Resource<List<Disaster>>> = disasterIDisasterRepository.getFilterLocationDisaster(filter)
