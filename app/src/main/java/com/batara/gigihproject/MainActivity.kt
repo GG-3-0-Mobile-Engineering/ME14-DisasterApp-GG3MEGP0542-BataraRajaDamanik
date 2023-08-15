@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
 
        lifecycleScope.launch {
-           delay(200)
+           delay(1000)
            supportFragmentManager.beginTransaction()
                .replace(R.id.frameContainer, MapsFragment())
                .commit()
