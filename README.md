@@ -6,7 +6,7 @@ DisasterApp adalah aplikasi yang dirancang untuk menampilkan informasi tentang b
 
 1. Klon repositori dengan menggunakan perintah berikut:
 <pre>
-git clone https://github.com/username/repo.git
+git clone https://github.com/GG-3-0-Mobile-Engineering/ME14-DisasterApp-GG3MEGP0542-BataraRajaDamanik.git
 </pre>
 2. Di dalam berkas `local.properties` dalam proyek, deklarasikan variabel berikut dan ganti `"your api key"` dengan kunci API Google Maps sesungguhnya:
 <pre>
