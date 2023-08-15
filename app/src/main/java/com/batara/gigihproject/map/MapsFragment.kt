@@ -170,7 +170,6 @@ class MapsFragment : Fragment(), RecyclerViewClickListener {
             chip.isChipIconVisible = true
             binding.chipGroupDisaster.addView(chip)
             chip.setOnClickListener {
-                Toast.makeText(context, listFilter[i], Toast.LENGTH_SHORT).show()
                 loadDataFilter(disasterAdapter, listFilter[i].lowercase())
             }
         }
@@ -240,9 +239,7 @@ class MapsFragment : Fragment(), RecyclerViewClickListener {
     private fun showErrorState(disaster: Resource.Error<List<Disaster>>) {
         binding.progressBar.visibility = View.GONE
         activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-        binding.viewError.root.visibility = View.VISIBLE
-        binding.viewError.tvError.text =
-            disaster.massage ?: getString(R.string.errorText)
+        Toast.makeText(context, disaster.massage ?: getString(R.string.errorText), Toast.LENGTH_LONG).show()
     }
 
 
@@ -325,7 +322,6 @@ class MapsFragment : Fragment(), RecyclerViewClickListener {
             searchView.hide()
         }
         loadDataFilterLocation(disasterAdapter, data.value)
-        Toast.makeText(activity, data.type, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {
