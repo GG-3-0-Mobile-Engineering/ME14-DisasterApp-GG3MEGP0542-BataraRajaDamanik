@@ -8,4 +8,3 @@ data class FilterLocation(
     val type : String,
     val value : String,
 ) : Parcelable
-

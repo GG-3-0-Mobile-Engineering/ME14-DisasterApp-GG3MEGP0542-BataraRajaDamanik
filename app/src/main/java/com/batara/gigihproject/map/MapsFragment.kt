@@ -95,10 +95,6 @@ class MapsFragment : Fragment(), RecyclerViewClickListener {
         standardBottomSheetBehavior.peekHeight = 400
         standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         standardBottomSheetBehavior.isHideable = false
-
-        binding.btExpand.setOnClickListener {
-            standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        }
     }
 
     private fun initSearchView(locationDisasterAdapter : FilterLocationDisasterAdapter) {
